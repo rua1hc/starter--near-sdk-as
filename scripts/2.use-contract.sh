@@ -6,39 +6,60 @@ set -e
 echo
 echo ---------------------------------------------------------
 echo "Step 0: Check for environment variable with contract name"
-echo ---------------------------------------------------------
+echo ---------------------------
 echo
 
 [ -z "$CONTRACT" ] && echo "Missing \$CONTRACT environment variable" && exit 1
+[ -z "$OWNER" ] && echo "Missing \$OWNER environment variable" && exit 1
 [ -z "$CONTRACT" ] || echo "Found it! \$CONTRACT is set to [ $CONTRACT ]"
+[ -z "$OWNER" ] || echo "Found it! \$OWNER is set to [ $OWNER ]"
 
 echo
-echo
 echo ---------------------------------------------------------
-echo "Step 1: Call 'view' functions on the contract"
-echo
-echo "(run this script again to see changes made by this file)"
-echo ---------------------------------------------------------
+echo "Step 1.1: Call 'view' functions on the contract"
+echo ---------------------------
 echo
 
 near view $CONTRACT helloWorld
 
-echo
-echo
-
-near view $CONTRACT read '{"key":"some-key"}'
+# near view $CONTRACT read '{"key":"some-key"}'
 
 echo
+echo ---------------------------------------------------------
+echo "Step 1.2: Call 'view' functions on the owner"
+echo ---------------------------
+echo
+
+near view $CONTRACT helloWorld --accountId $OWNER
+
+echo
+echo ---------------------------------------------------------
+echo "Step 1.3: Call 'change' functions on the contract"
+echo ---------------------------
+echo
+
+near call $CONTRACT helloWorld --accountId $CONTRACT
+
+echo
+echo ---------------------------------------------------------
+echo "Step 1.4: Call 'change' functions on the owner"
+echo
+echo "(run this script again to see changes made by this file)"
+echo ---------------------------
+echo
+
+near call $CONTRACT Welcome --accountId $OWNER
+
 echo
 echo ---------------------------------------------------------
 echo "Step 2: Call 'change' functions on the contract"
-echo ---------------------------------------------------------
+echo ---------------------------
 echo
 
 # the following line fails with an error because we can't write to storage without signing the message
 # --> FunctionCallError(HostError(ProhibitedInView { method_name: "storage_write" }))
 # near view $CONTRACT write '{"key": "some-key", "value":"some value"}'
-near call $CONTRACT write '{"key": "some-key", "value":"some value"}' --accountId $CONTRACT
+# near call $CONTRACT write '{"key": "some-key1", "value":"some value1"}' --accountId $CONTRACT
 
 echo
 echo "now run this script again to see changes made by this file"
