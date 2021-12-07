@@ -2,7 +2,7 @@ import { storage, Context } from "near-sdk-as"
 
 // return the string 'hello world'
 export function helloWorld(): string {
-  return 'Welcome rua1hc to Near!'
+  return 'Hi rua1hc to Near!'
 }
 
 // return the string 'hello world'

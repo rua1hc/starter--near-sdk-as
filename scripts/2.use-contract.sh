@@ -16,33 +16,33 @@ echo
 
 echo
 echo ---------------------------------------------------------
-echo "Step 1.1: Call 'view' functions on the contract"
+echo "Step 1.1: Call 'view' functions on the CONTRACT"
 echo ---------------------------
 echo
 
-near view $CONTRACT helloWorld
+# near view $CONTRACT helloWorld
 
 # near view $CONTRACT read '{"key":"some-key"}'
 
 echo
 echo ---------------------------------------------------------
-echo "Step 1.2: Call 'view' functions on the owner"
+echo "Step 1.2: Call 'view' functions on the OWNER"
 echo ---------------------------
 echo
 
-near view $CONTRACT helloWorld --accountId $OWNER
+# near view $CONTRACT helloWorld --accountId $OWNER
 
 echo
 echo ---------------------------------------------------------
-echo "Step 1.3: Call 'change' functions on the contract"
+echo "Step 1.3: Call 'change' functions on the CONTRACT"
 echo ---------------------------
 echo
 
-near call $CONTRACT helloWorld --accountId $CONTRACT
+near call $CONTRACT Welcome --accountId $CONTRACT
 
 echo
 echo ---------------------------------------------------------
-echo "Step 1.4: Call 'change' functions on the owner"
+echo "Step 1.4: Call 'change' functions on the OWNER"
 echo
 echo "(run this script again to see changes made by this file)"
 echo ---------------------------
